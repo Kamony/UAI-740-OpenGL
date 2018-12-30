@@ -1,5 +1,6 @@
 package utils;
 
+import entities.Camera;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
@@ -31,5 +32,16 @@ public class Maths {
         projectionMatrix.m33 = 0;
 
         return projectionMatrix;
+    }
+
+    public static Matrix4f createViewMatrix(Camera camera) {
+        Matrix4f viewMatrix = new Matrix4f();
+        viewMatrix.setIdentity();
+        Matrix4f.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1,0,0), viewMatrix, viewMatrix);
+        Matrix4f.rotate((float)Math.toRadians(camera.getYaw()), new Vector3f(0,1,0), viewMatrix, viewMatrix);
+        Vector3f cameraPos = camera.getPosition();
+        Vector3f negativeCameraPosition = new Vector3f(-cameraPos.x,-cameraPos.y,-cameraPos.z);
+        Matrix4f.translate(negativeCameraPosition, viewMatrix, viewMatrix);
+        return viewMatrix;
     }
 }
