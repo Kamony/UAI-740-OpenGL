@@ -1,7 +1,9 @@
 package game;
 
+import entities.Entity;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.opengl.TextureLoader;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
@@ -16,8 +18,8 @@ public class MainGameLoop {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-        Renderer renderer = new Renderer();
         StaticShader shader = new StaticShader();
+        Renderer renderer = new Renderer(shader);
         float[] vertices = {
                 -0.5f, 0.5f, 0f,
                 -0.5f, -0.5f, 0f,
@@ -41,11 +43,14 @@ public class MainGameLoop {
         ModelTexture texture = new ModelTexture(loader.loadTexture("space"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
 
+        Entity entity = new Entity(texturedModel, new Vector3f(0,0,-1), 0,0,0,1);
+
         while(!Display.isCloseRequested()){
+            entity.increasePosition(0,0,-0.1f);
             renderer.prepare();
 
             shader.start();
-            renderer.render(texturedModel);
+            renderer.render(entity, shader);
             shader.stop();
 
             DisplayManager.updateDisplay();
