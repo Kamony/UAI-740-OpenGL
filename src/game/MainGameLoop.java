@@ -101,14 +101,15 @@ public class MainGameLoop {
         RawModel model = OBJLoader.loadObjModel("Ship2", loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("ship"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
-
+//        texture.setShineDamper(10);
+//        texture.setReflectivity(1);
         Entity entity = new Entity(texturedModel, new Vector3f(0,0,-5), 0,0,0,1);
         Camera camera = new Camera();
 
-        Light light = new Light(new Vector3f(0,0,1), new Vector3f(1,1,1));
+        Light light = new Light(new Vector3f(0,0,-5), new Vector3f(1,1,1));
 
         while(!Display.isCloseRequested()){
-            entity.increaseRotation(0,0.5f,0);
+            entity.increaseRotation(0f,.5f,0f);
             camera.move();
             renderer.prepare();
 

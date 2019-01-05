@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import shaders.StaticShader;
+import textures.ModelTexture;
 import utils.Maths;
 
 public class Renderer {
@@ -47,6 +48,8 @@ public class Renderer {
                 entity.getScale()
                 );
         shader.loadTransformationMatrix(transformationMatrix);
+        ModelTexture texture = texturedModel.getTexture();
+        shader.loadShineVariables(texture.getShineDamper(),texture.getReflectivity());
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturedModel.getTexture().getID());
 
