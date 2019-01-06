@@ -9,6 +9,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import shaders.StaticShader;
+import terrains.Terrain;
 import textures.ModelTexture;
 
 public class MainGameLoop {
@@ -18,7 +19,7 @@ public class MainGameLoop {
 
         Loader loader = new Loader();
 //        StaticShader shader = new StaticShader();
-//        Renderer renderer = new Renderer(shader);
+//        EntityRenderer renderer = new EntityRenderer(shader);
 // cube
 // float[] vertices = {
 //                -0.5f,0.5f,-0.5f,
@@ -100,22 +101,20 @@ public class MainGameLoop {
         TexturedModel texturedModel = new TexturedModel(model, texture);
         texture.setShineDamper(10);
         texture.setReflectivity(1);
+
         Entity entity = new Entity(texturedModel, new Vector3f(0,0,-5), 0,0,0,1);
+        Terrain terrain = new Terrain(0,0,loader, new ModelTexture(loader.loadTexture("podlaha")));
+        Terrain terrain2 = new Terrain(1,0,loader, new ModelTexture(loader.loadTexture("podlaha")));
         Camera camera = new Camera();
 
-        Light light = new Light(new Vector3f(0,0,-5), new Vector3f(1,1,1));
+        Light light = new Light(new Vector3f(3000,2000,2000), new Vector3f(1,1,1));
 
         MasterRenderer renderer = new MasterRenderer();
         while(!Display.isCloseRequested()){
             entity.increaseRotation(0f,.5f,0f);
             camera.move();
-//            renderer.prepare();
-//
-//            shader.start();
-//            shader.loadLight(light);
-//            shader.loadViewMatrix(camera);
-//            renderer.render(entity, shader);
-//            shader.stop();
+            renderer.processTerrain(terrain);
+            renderer.processTerrain(terrain2);
             renderer.processEntity(entity);
             renderer.render(light, camera);
             DisplayManager.updateDisplay();

@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
 import shaders.StaticShader;
 import textures.ModelTexture;
 import utils.Maths;
@@ -15,31 +16,16 @@ import utils.Maths;
 import java.util.List;
 import java.util.Map;
 
-public class Renderer {
+public class EntityRenderer {
 
-    private static final float FOV = 70;
-    private static final float NEAR_PLANE = 0.1f;
-    private static final float FAR_PLANE = 1000f;
-
-    private Matrix4f projectionMatrix;
     private StaticShader shader;
 
-    public Renderer(StaticShader shader){
-        // optimalizace vykreslovani
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glCullFace(GL11.GL_BACK);
-
+    public EntityRenderer(StaticShader shader, Matrix4f projectionMatrix){
         this.shader = shader;
-        this.projectionMatrix = Maths.createProjectionMatrix(FOV,NEAR_PLANE,FAR_PLANE);
+//        this.projectionMatrix = Maths.createProjectionMatrix(FOV,NEAR_PLANE,FAR_PLANE);
         shader.start();
-        shader.loadProjectionMatrix(this.projectionMatrix);
+        shader.loadProjectionMatrix(projectionMatrix);
         shader.stop();
-    }
-
-    public void prepare(){
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glClearColor(1,0,0,1);
     }
 
     public void render(Map<TexturedModel, List<Entity>> entities){
