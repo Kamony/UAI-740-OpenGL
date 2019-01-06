@@ -107,9 +107,10 @@ public class MainGameLoop {
         texture.setShineDamper(10);
         texture.setReflectivity(1);
 
-//        Entity entity = new Entity(texturedModel, new Vector3f(0,0,-5), 0,0,0,1);
-        Terrain terrain = new Terrain(0,-1,loader, new ModelTexture(loader.loadTexture("podlaha")));
-        Terrain terrain2 = new Terrain(-1,-1,loader, new ModelTexture(loader.loadTexture("podlaha")));
+        Terrain terrain = new Terrain(0,-1,loader, new ModelTexture(loader.loadTexture("podlaha")),
+                "heightmap");
+        Terrain terrain2 = new Terrain(-1,-1,loader, new ModelTexture(loader.loadTexture("podlaha")),
+                "heightmap");
 
         Light light = new Light(new Vector3f(3000,2000,2000), new Vector3f(1,1,1));
 
