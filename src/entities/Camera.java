@@ -1,12 +1,11 @@
 package entities;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 
-    private float distanceFromPlayer = 3;
+    private float distanceFromPlayer = 6;
     private float angleAroundPlayer = 0;
 
     private Vector3f position = new Vector3f(0,0,0);

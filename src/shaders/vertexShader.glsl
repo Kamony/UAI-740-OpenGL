@@ -16,7 +16,7 @@ uniform mat4 viewMatrix;
 uniform vec3 lightPosition;
 
 const float density = 0.035;
-const float gradient = 5.0;
+const float gradient = 1.0;
 
 void main(void){
     vec4 worldPosition = transformationMatrix * vec4(position,1.0);
